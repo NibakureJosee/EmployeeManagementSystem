@@ -1,30 +1,29 @@
-import React from 'react';
-import '../assets/scss/404.scss'
-import { useLocation } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet"
+import { generatePageTitle } from "../lib/utils";
 
-function NotFound() {
-  const location = useLocation();
+export default function NotFound() {
+    return (
+        <>
+            <Helmet>
+                <title>{generatePageTitle("Page Not Found")}</title>
+            </Helmet>
+            <main className="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+                <div className="text-center">
+                    <p className="text-base font-semibold text-blue-600">404</p>
+                    <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Page not found</h1>
+                    <p className="mt-6 text-base leading-7 text-gray-600">Sorry, we couldn’t find the page you want.</p>
+                    <div className="mt-10 flex items-center justify-center gap-x-6">
+                        <Link
+                            to="/"
+                            className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Go back home
+                        </Link>
 
-  return (
-    <div id="page_not_found">
-      <div className="nav bg-yellow-100">
-        <div className="flex place-items-center w-full justify-center">
-          <div className="my-auto">
-            <div className="margin">
-              {location.pathname == "/access_denied" ? 401 : 404}
-            </div>
-            <div className="long margin">
-              {
-                location.pathname == "/access_denied"
-                  ? "Access Denied"
-                  : "Page not found"
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+                    </div>
+                </div>
+            </main>
+        </>
+    )
 }
-
-export default NotFound

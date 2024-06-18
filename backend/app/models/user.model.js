@@ -4,7 +4,29 @@ const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const User = sequelize.define('user_table', {
+/**
+ * @swagger
+ * definitions:
+ *   User:
+ *     properties:
+ *       id:
+ *         type: integer
+ *       firstName:
+ *         type: string
+ *       lastName:
+ *         type: string
+ *       email:
+ *         type: string
+ *       password:
+ *         type: string
+ *     required:
+ *       - firstName
+ *       - lastName
+ *       - email
+ *       - password
+ */
+
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -19,22 +41,6 @@ const User = sequelize.define('user_table', {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
-  nationalId: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  department: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  position: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  phone: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
@@ -43,19 +49,10 @@ const User = sequelize.define('user_table', {
   password: {
     type: DataTypes.STRING(255),
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-    onUpdate: DataTypes.NOW,
-  },
+  }
 });
 
-// Sync employee model with the database
+// Sync student model with the database
 (async () => {
   try {
     await User.sync();
@@ -77,11 +74,7 @@ module.exports.validateUser = (body, isUpdating = false) => {
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
-    phone: Joi.string().pattern(/(?<!\d)\d{10}(?!\d)/).required(),
     password: isUpdating ? Joi.string().min(6) : Joi.string().min(6).required(),
-    nationalId: Joi.string().pattern(/(?<!\d)\d{16}(?!\d)/).length(16).required(),
-    department: Joi.string().required(),
-    position: Joi.string().required()
   }).validate(body);
 };
 
@@ -91,6 +84,3 @@ module.exports.validateUserLogin = (body) => {
     password: Joi.string().required(),
   }).validate(body);
 };
-
-module.exports.NationalIdPattern = /(?<!\d)\d{16}(?!\d)/;
-module.exports.PhoneRegex = /(?<!\d)\d{10}(?!\d)/;

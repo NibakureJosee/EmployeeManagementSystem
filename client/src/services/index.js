@@ -8,9 +8,7 @@ class AppServices {
     return axios.post(`${API_URL}/users/` + "login", body);
   }
 
-  updateUser(body, id) {
-    return axios.put(`${API_URL}/users`, body);
-  }
+
 
   getCurrentUser() {
     return axios.get(`${API_URL}/users/current`);
@@ -20,30 +18,16 @@ class AppServices {
     return axios.post(`${API_URL}/users`, body);
   }
 
-  deleteUser() {
-    return axios.delete(`${API_URL}/users`);
-  }
+ 
+  
 
-  updateLaptop(body, id) {
-    return axios.put(`${API_URL}/laptops/` + id, body);
-  }
-  deleteLaptop(id) {
-    return axios.delete(`${API_URL}/laptops/` + id);
-  }
-
-  registerLaptop(body) {
+  createBook(body) {
     return axios.post(`${API_URL}/laptops/`, body);
   }
-  getLaptops(query = "page=1&limit=10") {
+  getAllBooks(query = "page=1&limit=10") {
     return axios.get(`${API_URL}/laptops?${query}`);
   }
 
-  updateEmployee(body, id) {
-    return axios.put(`${API_URL}/employees/` + id, body);
-  }
-  deleteEmployee(id) {
-    return axios.delete(`${API_URL}/employees/` + id);
-  }
 
   registerEmployee(body) {
     return axios.post(`${API_URL}/employees/`, body);

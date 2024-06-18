@@ -1,7 +1,7 @@
 const {
-    createUser,
-    userLogin,
-  } = require("../controllers/user.controller");
+    getAllBooks,
+    getBookById
+  } = require("../controllers/book.controller");
   const {
     auth
   } = require("../middlewares/auth.middleware");
@@ -13,18 +13,22 @@ const {
     router.route("/")
       /**
        * @swagger
-       * /users:
-       *   post:
+       * /books:
+       *   get:
        *     tags:
-       *       - User
-       *     description: Create a user
+       *       - Book
+       *     description: Returns all books
+       *     security:
+       *       - bearerAuth: []
        *     parameters:
-       *       - name: body
-       *         description: Fields for a user
-       *         in: body
-       *         required: true
-       *         schema:
-       *           $ref: '#/definitions/User'
+       *       - name: page
+       *         description: Page number
+       *         in: query
+       *         type: string
+       *       - name: limit
+       *         description: Elements per page
+       *         in: query
+       *         type: string
        *     responses:
        *       200:
        *         description: OK
@@ -37,29 +41,25 @@ const {
        *       500:
        *         description: Internal Server Error
        */
-      .post(createUser)
-    
+      .get([auth, getAllBooks]);
   
-    router.route("/login")
+    router.route("/:id")
       /**
        * @swagger
-       * /users/login:
-       *   post:
+       * /books/{id}:
+       *   get:
        *     tags:
-       *       - User
-       *     description: User Login
+       *       - Book
+       *     description: Get book by ID
+       *     security:
+       *       - bearerAuth: []
        *     parameters:
-       *       - name: body
-       *         description: Fields for a user
-       *         in: body
+       *       - name: id
+       *         description: Book ID
+       *         in: path
+       *         type: string
        *         required: true
-       *         schema:
-       *           properties:
-       *            email:
-       *              type: string
-       *            password:
-       *              type: string
-       *     responses: 
+       *     responses:
        *       200:
        *         description: OK
        *       400:
@@ -71,7 +71,8 @@ const {
        *       500:
        *         description: Internal Server Error
        */
-      .post(userLogin)
+      .get([auth, getBookById]);
   
-    app.use("/api/users",router);
+    app.use("/api/books", router);
   };
+  

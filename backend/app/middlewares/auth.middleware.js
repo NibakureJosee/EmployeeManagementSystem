@@ -1,5 +1,6 @@
 // import dependencies
 const { verify } = require('jsonwebtoken');
+const Student = require('../models/user.model');
 const User = require('../models/user.model');
 
 async function auth(req, res, next) {

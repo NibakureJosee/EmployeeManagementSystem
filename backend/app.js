@@ -19,12 +19,12 @@ require("./app/config/dbConnection");
 
 
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to Laptop Tracking Management System." });
+    res.json({ message: "Welcome Library Management System." });
 });
 
 require("./app/routes/user.routes")(app);
-require("./app/routes/laptop.routes")(app);
-require("./app/routes/employee.routes")(app);
-require("./app/routes/laptopEmployee.routes")(app);
+require("./app/routes/book.routes")(app);
+// require("./app/routes/employee.routes")(app);
+// require("./app/routes/laptopEmployee.routes")(app);
 
 module.exports = app;
